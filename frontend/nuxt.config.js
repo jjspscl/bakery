@@ -1,3 +1,6 @@
+const config = {
+  test: process.env.NODE_ENV !== 'production'
+}
 
 export default {
   mode: 'spa',
@@ -43,13 +46,14 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: config.test ? 'http://localhost:8000/api/' : ''
   },
   /*
   ** Build configuration
@@ -60,5 +64,10 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  env: {
+    IS_DEV: config.test,
+    API_URL: config.test ? 'http://localhost:8000/api/' : '',
+    CLIENT_URL: config.test ? 'http://localhost:3000' : ''
   }
 }

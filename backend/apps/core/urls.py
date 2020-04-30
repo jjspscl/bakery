@@ -22,13 +22,11 @@ urlpatterns = [
 
     ])),
 
-    # path('aws/', include([
-    #     path('', aws.AWS_Account.as_view(
-    #         {'get': 'retrieve', 'post': 'create'}), name='aws-register'),
-    #     path('conf/', aws.AWS_Account.as_view(
-    #         {'get': 'retrieve', 'post': 'create'}), name='aws-register'),
-    #     path('resources/', aws.resources, name='aws-resources'),
-    #     path('ec2/', aws.EC2, name='aws-ec2'),
-    # ])),
+    path('', include([
+        path('pastry/', pastry.PastryView.as_view(
+            { 'get': 'retrieve', 'put': 'update'}), name='pastry-list'),
+        path('ingredients/', pastry.IngredientsView.as_view(
+            { 'get': 'retrieve'}), name='ingredients-list'),
+    ])),
 
 ]

@@ -16,8 +16,8 @@
               d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z"
               clip-rule="evenodd"
             />
-          </svg>
-        </b-button> Bakery
+          </svg> Bakery
+        </b-button>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse" />
@@ -45,17 +45,21 @@
       title="Bakery"
       backdrop
       shadow
-    ><hr>
-    <div class="container-fluid">
-      <b-nav vertical>
-        <nuxt-link :to="{ name: '' }">
-          <b-nav-item>Pastries</b-nav-item>
-        </nuxt-link><hr>
-        <nuxt-link :to="{ name: '' }">
-          <b-nav-item>Ingredients</b-nav-item>
-        </nuxt-link><hr>
-      </b-nav>
-    </div>
+    >
+      <hr>
+      <div class="container-fluid">
+        <b-nav vertical>
+          <b-nav-item @click="$router.push({ name: 'index' })">
+            Home
+          </b-nav-item><hr>
+          <b-nav-item @click="$router.push({ name: 'pastry'})">
+            Pastry
+          </b-nav-item><hr>
+          <nuxt-link :to="{ name: '' }">
+            <b-nav-item>Ingredients</b-nav-item>
+          </nuxt-link><hr>
+        </b-nav>
+      </div>
     </b-sidebar>
   </div>
   </div>

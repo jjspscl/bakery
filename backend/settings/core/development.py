@@ -64,7 +64,7 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8002",
+    "http://localhost:3000",
 ]
 
 

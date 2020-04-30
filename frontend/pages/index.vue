@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    Pastry
-  </div>
+  <div class="container-fluid" />
 </template>
 
 <script>

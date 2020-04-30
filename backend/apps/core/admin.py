@@ -8,12 +8,12 @@ excepts = ['Permission', 'Group', 'User',
 
 @admin.register(pastry.Ingredient)
 class IngredientsAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('name','price','unit')
 
 
 @admin.register(pastry.Pastry)
 class PastryAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('name',)
 
 
 @admin.register(pastry.PastryIngredient)

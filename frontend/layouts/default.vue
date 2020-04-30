@@ -7,8 +7,12 @@
 
 <script>
 import Navbar from '@/components/Navbar'
+import _service from '@/plugins/service'
 export default {
-  components: { Navbar }
+  components: { Navbar },
+  mounted () {
+    _service(this)
+  }
 }
 </script>
 <style>
