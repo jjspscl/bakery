@@ -81,7 +81,8 @@ import Dropdown from '@/components/Dropdown'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  async middleware ({ route, store }) {
+  async middleware ({ route, store, redirect }) {
+    // if (!(parseInt(route.params.id) in store.getters['aws/pastries'])) { return redirect('') }
     await store.dispatch('pastry/GetPastries')
     await store.dispatch('pastry/GetIngredients')
     await store.dispatch('pastry/GetPastryIngredients', route.params.id)

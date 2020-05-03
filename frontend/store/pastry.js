@@ -63,13 +63,21 @@ export const mutations = {
     })
   },
   AppendIngredients (state, data) {
+    // data.forEach((res) => {
+    //   const ix = state.ingredients.map(a => a.name).indexOf(res.name)
+    //   if (ix === -1) {
+    //     state.ingredients.push(res)
+    //   } else {
+    //     Vue.set(state.ingredients, ix, res)
+    //   }
+    // })
+    state.ingredients = []
     data.forEach((res) => {
-      const ix = state.ingredients.map(a => a.name).indexOf(res.name)
-      if (ix === -1) {
-        state.ingredients.push(res)
-      } else {
-        Vue.set(state.ingredients, ix, res)
-      }
+      state.ingredients.push({
+        id: res.id,
+        name: res.name,
+        price: res.price
+      })
     })
   },
   AppendPastryIngredients (state, { obj, data }) {
