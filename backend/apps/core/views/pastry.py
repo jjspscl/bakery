@@ -17,6 +17,19 @@ class PastryView(viewsets.ViewSet):
         queryset = Pastry.objects.all()
         serializer = PastrySerializer(queryset, many=True)
         return Response(serializer.data)
+    def create(self, request):
+      r = request.data
+      try:
+        if len(r['data']) < 4: 
+          raise Exception('Name must have 4 or more characters')
+        p, created = Pastry.objects.get_or_create(name=r['data'].title())
+        if created:
+          serializer = PastrySerializer(p)
+          return Response(serializer.data)
+        else:
+          return Response({'message': f'{p.name} already Exists'},status=status.HTTP_400_BAD_REQUEST)
+      except Exception as e:
+          return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
       r = request.data
@@ -27,6 +40,15 @@ class PastryView(viewsets.ViewSet):
 
         serializer = PastrySerializer(pastry)
         return Response(serializer.data)
+      except Exception as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+      r = request.data
+      try:
+        pi = Pastry.objects.get(id=r['id'])
+        pi.delete()
+        return Response({'msg': 'Successful', 'id': r['id']})
       except Exception as e:
         print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -39,6 +61,47 @@ class IngredientsView(viewsets.ViewSet):
         queryset = Ingredient.objects.all()
         serializer = IngredientSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def create(self, request):
+      r = request.data
+      try:
+        if len(r['name']) < 3:
+          raise Exception('Name must have 3 or more characters')
+
+        p, created = Ingredient.objects.get_or_create(name=r['name'].title(), price=int(r['price']))
+        if created:
+          serializer = IngredientSerializer(p)
+          return Response(serializer.data)
+        else:
+          return Response({'message': f'{p.name} already Exists'}, status=status.HTTP_400_BAD_REQUEST)
+      except Exception as e:
+        print(e)
+        return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+      
+    def update(self, request, pk=None):
+      r = request.data
+
+      try:
+        pastry = Ingredient.objects.get(id=r['id'])
+        pastry.name = r['name']
+        pastry.price = r['price']
+        pastry.save()
+
+        serializer = IngredientSerializer(pastry)
+        return Response(serializer.data)
+      except Exception as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+      r = request.data
+      try:
+        pi = Ingredient.objects.get(id=r['id'])
+        pi.delete()
+        return Response({'msg': 'Successful', 'id': r['id']})
+      except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class PastryIngredientsView(viewsets.ViewSet):

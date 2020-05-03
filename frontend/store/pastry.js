@@ -48,6 +48,20 @@ export const mutations = {
       if (e.id === obj.id) { Vue.set(state.pastry, index, obj) }
     })
   },
+  UpdateIngredient (state, obj) {
+    state.ingredients.forEach((e, index) => {
+      if (e.id === obj.id) {
+        Vue.set(state.ingredients, index, obj)
+      }
+    })
+  },
+  AppendIngredient (state, res) {
+    state.ingredients.push({
+      id: res.id,
+      name: res.name,
+      price: res.price
+    })
+  },
   AppendIngredients (state, data) {
     data.forEach((res) => {
       const ix = state.ingredients.map(a => a.name).indexOf(res.name)

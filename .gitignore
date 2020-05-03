@@ -136,6 +136,6 @@ dist
 # End of https://www.gitignore.io/api/nuxtjs,django
 *.sqlite3
 env/
-
+wenv/
 *output.json
 *.code-workspace

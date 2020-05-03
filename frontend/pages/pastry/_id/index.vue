@@ -1,37 +1,40 @@
 <template>
   <div class="container-fluid">
     <div class="col">
-      <div class="row">
+      <div class="row header">
         <h1>{{ pastry.name }}</h1>
         <b-form inline>
           <Dropdown
             :options="ingredient_names"
             v-on:selected="ingredientSelect"
             v-on:filter="ingredientQuery"
+            class="mx-2 my-2"
             :disabled="false"
             :maxItem="10"
             name="ingredient"
             placeholder="Please select an option"
           />
-
-          <b-button variant="primary" @click="addIngredient">
-            Add +
-          </b-button>
+          <div>
+            <b-button
+              variant="primary"
+              class="my-2 mx-2"
+              @click="addIngredient"> Add </b-button>
+          </div>
         </b-form>
       </div>
+      <Card class="row ingr-header">
+       <div>Name</div>
+       <div>Price</div>
+       <div>Amount</div>
+       <div>Subtotal</div>
+       <div>Action</div>
+      </Card>
       <div class="row">
-        {{ ingredients }}
-        </div>
-      <div class="row ingr-container">
-        {{ pastry_ingredients }}
-        <div v-for="(ingr, index) in pastry_ingredients">
-          <h5>{{ get_ingredient(ingr).name }}</h5>
+        <Card v-for="(ingr, index) in pastry_ingredients" class="ingr-container">
+          <div><h5>{{ get_ingredient(ingr).name }}</h5></div>
           <div>{{ get_ingredient(ingr).price }}</div>
           <div>
-            <b-form inline>
-              <label
-              label="Amount"
-              :label-for="`iamount${index}`">Amount: </label>
+            <b-form @submit.prevent="" inline>
               <b-form-input
                 :id="`iamount${index}`"
                 class="mb-2 mr-sm-2 mb-sm-0"
@@ -41,34 +44,35 @@
                 step="1"
                 @change="ingredientGram($event, ingr)" /></b-form>
             </div>
-          <b-button
-            variant="danger"
-            @click="deleteIngredient(ingr)">Delete</b-button>
-
           <div>{{ SumIngredient(ingr) }}</div>
+          <div>
+            <b-button
+              variant="danger"
+              @click="deleteIngredient(ingr)">Delete</b-button>
           </div>
-      </div>
-      <div class="row">
-        <div>Total Grams:{{ totalGrams }}</div>
-        <div>
-          <b-form inline>
-              <label
-              label="Amount"/>
-              <b-form-input
-                id="gpp"
-                class="mb-2 mr-sm-2 mb-sm-0"
-                type="number"
-                :value="grams_per_piece"
-                min="1"
-                step="1"
-                @change="total" /></b-form>
-        </div>
-        <div>Output in pcs: {{ OutputInPiece }}</div>
-        <div>Total Cost: {{ totalCost.toFixed(2) }}</div>
-        <div>Cost/pc: {{ (totalCost / grams_per_piece).toFixed(2) }}</div>
-      </div>
-    </div>
+          </Card>
 
+      </div>
+      <Card class="total-container">
+        <div>Total Grams:{{ totalGrams }}</div>
+          <div>
+            <b-form @submit.prevent="" inline>
+                <label
+                label="Amount"/>
+                <b-form-input
+                  id="gpp"
+                  class="mb-2 mr-sm-2 mb-sm-0"
+                  type="number"
+                  :value="grams_per_piece"
+                  min="1"
+                  step="1"
+                  @change="total" /></b-form>
+          </div>
+          <div>Output in pcs: {{ OutputInPiece }}</div>
+          <div>Total Cost: {{ totalCost.toFixed(2) }}</div>
+          <div>Cost/pc: {{ (totalCost / grams_per_piece).toFixed(2) }}</div>
+    </Card>
+    </div>
   </div>
 </template>
 
@@ -89,6 +93,12 @@ export default {
       total_grams: 0,
       grams_per_piece: 1
     }
+  },
+  beforeCreated () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   },
   computed: {
     pastry ({ $store, $route }) {
@@ -122,6 +132,9 @@ export default {
     })
   },
   methods: {
+    handleScroll (event) {
+      console.log(event)
+    },
     ingredientSelect ($a) {
       this.select_ingredient = $a
     },
@@ -158,12 +171,52 @@ export default {
 </script>
 
 <style>
+.container-fluid{
+  padding: 0;
+  height: 100vh;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.header form {
+  display: flex !important;
+}
+
+.header form > div {
+  flex: 1;
+}
 .ingr-container{
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  width: 100%;
 }
 
 .ingr-container > div{
-  display: flex;
-  justify-content: space-between;
+  flex: 1;
+}
+
+.ingr-container input * {
+  width: 100%;
+}
+
+.ingr-header {
+  display:flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.ingr-header > div {
+  flex: 1;
+}
+
+.total-container {
+  margin-top: auto !important;
 }
 </style>

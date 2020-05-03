@@ -25,12 +25,12 @@ urlpatterns = [
     path('', include([
         path('pastry/', include([
             path('', pastry.PastryView.as_view(
-                {'get': 'retrieve', 'put': 'update'}), name='pastry-list'),
+                {'get': 'retrieve', 'post': 'create', 'put': 'update', 'delete': 'destroy'}), name='pastry-list'),
             path('ingredients', pastry.PastryIngredientsView.as_view(
                 {'get': 'retrieve','put': 'update', 'post':'create', 'delete':'destroy'}), name='pastry-ingredients-list'),
         ])),
         path('ingredients/', pastry.IngredientsView.as_view(
-            {'get': 'retrieve' }), name='ingredients-list'),
+            {'get': 'retrieve', 'post': 'create', 'put': 'update', 'delete': 'destroy'}), name='ingredients-list'),
     ])),
 
 ]

@@ -55,9 +55,9 @@
           <b-nav-item @click="$router.push({ name: 'pastry'})">
             Pastry
           </b-nav-item><hr>
-          <nuxt-link :to="{ name: '' }">
-            <b-nav-item>Ingredients</b-nav-item>
-          </nuxt-link><hr>
+          <b-nav-item @click="$router.push({ name: 'ingredients'})">
+            Ingredients
+          </b-nav-item><hr>
         </b-nav>
       </div>
     </b-sidebar>

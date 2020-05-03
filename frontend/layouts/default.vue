@@ -7,11 +7,15 @@
 
 <script>
 import Navbar from '@/components/Navbar'
+import _components from '@/components/index'
 import _service from '@/plugins/service'
 export default {
   components: { Navbar },
   mounted () {
     _service(this)
+  },
+  created () {
+    _components()
   }
 }
 </script>
@@ -40,14 +44,14 @@ body {
   height: 100vh;
 }
 
-#site {
+#site, #__nuxt{
   height: 100%;
 }
 
-.container-fluid {
-    height: 100%;
-    overflow-y: hidden; /* don't show content that exceeds my height */
+#__layout, #__nuxt {
+  min-height: 100vh;
 }
+
 *,
 *:before,
 *:after {
