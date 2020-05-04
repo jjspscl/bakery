@@ -15,7 +15,7 @@
             class="mb-2 mr-sm-2 mb-sm-0"
             type="number"
             v-model="ingredientCreate.price"
-            min="1"
+            min="0.01"
             step="0.01" />
           <b-button
             class="mb-2 mr-sm-2 mb-sm-0"
