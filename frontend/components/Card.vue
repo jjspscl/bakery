@@ -13,7 +13,7 @@ export default {
 <style lang="css" scoped>
   .card{
     position: relative;
-    z-index: 1;
+    /* z-index: 1; */
     background: #FFFFFF;
     margin: 0 auto;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);

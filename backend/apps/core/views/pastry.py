@@ -36,6 +36,7 @@ class PastryView(viewsets.ViewSet):
       try:
         pastry = Pastry.objects.get(id=r['id'])
         pastry.name = r['name']
+        pastry.gpp = r['gpp']
         pastry.save()
 
         serializer = PastrySerializer(pastry)

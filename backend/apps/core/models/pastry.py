@@ -24,6 +24,8 @@ class Ingredient(Author):
 class Pastry(Author):
     name = models.CharField(max_length=240, validators=[
                             MinLengthValidator(11)], unique=True)
+    gpp = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)], default=1)
     def __str__(self):
         return self.name
 

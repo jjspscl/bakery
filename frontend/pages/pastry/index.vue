@@ -36,13 +36,14 @@
       hover
     >
       <template v-slot:cell(actions)="row">
-        <b-button
-          @click="showDetail(row)"
-          size="sm"
-          variant="primary"
-        >
-          Details
-        </b-button>
+        <nuxt-link :to="{ name: 'pastry-id', params: { id: row.item.id }}">
+          <b-button
+            size="sm"
+            variant="primary"
+          >
+           Details
+          </b-button>
+        </nuxt-link>
         <b-button
           @click="showModal(row, $event.target,'editModal')"
           size="sm"
@@ -191,7 +192,8 @@ export default {
       const data = await this.$axios
         .$put(process.env.API_URL + 'pastry/', {
           id: this.infoModal.content.id,
-          name: this.form.pastry_name
+          name: this.form.pastry_name,
+          gpp: this.infoModal.content.gpp
         })
         .catch((error) => {
           if (error.response) {

@@ -56,8 +56,8 @@
           class="mb-2 mr-sm-2 mb-sm-0"
           type="number"
           :value="row.item.price"
-          min="1"
-          step="1"
+          min="0.01"
+          step="0.01"
           @change="editIngredient($event, 'price', row.item)" />
       </template>
       <template v-slot:cell(actions)="row">

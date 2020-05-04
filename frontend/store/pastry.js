@@ -2,9 +2,13 @@ import Vue from 'vue'
 export const state = () => ({
   pastry: [],
   ingredients: [],
-  pastry_ingredients: []
+  pastry_ingredients: [],
+  gpp: {}
 })
-
+// {
+//   pastry_id: Number,
+//   va  Number
+// }
 export const getters = {
   pastries: state => state.pastry,
   pastry: state => (params) => {
@@ -31,7 +35,8 @@ export const mutations = {
   AppendPastry (state, res) {
     state.pastry.push({
       id: res.id,
-      name: res.name
+      name: res.name,
+      gpp: res.gpp
     })
   },
   AppendPastries (state, data) {
@@ -39,9 +44,13 @@ export const mutations = {
     data.forEach((res) => {
       state.pastry.push({
         id: res.id,
-        name: res.name
+        name: res.name,
+        gpp: res.gpp
       })
     })
+  },
+  UpdateGPP (state, data) {
+    state.gpp[data.pastry_id] = data.val
   },
   UpdatePastry (state, obj) {
     state.pastry.forEach((e, index) => {

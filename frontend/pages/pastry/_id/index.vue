@@ -63,14 +63,14 @@
                   id="gpp"
                   class="mb-2 mr-sm-2 mb-sm-0"
                   type="number"
-                  :value="grams_per_piece"
+                  :value="pastry.gpp"
                   min="1"
                   step="1"
                   @change="total" /></b-form>
           </div>
           <div>Output in pcs: {{ OutputInPiece }}</div>
           <div>Total Cost: {{ totalCost.toFixed(2) }}</div>
-          <div>Cost/pc: {{ (totalCost / grams_per_piece).toFixed(2) }}</div>
+          <div>Cost/pc: {{ (totalCost / pastry.gpp).toFixed(2) }}</div>
     </Card>
     </div>
   </div>
@@ -113,7 +113,7 @@ export default {
     },
     OutputInPiece ({ $store, $route }) {
       const sum = $store.state.pastry.pastry_ingredients.filter(e => e.pastry === parseInt($route.params.id)).reduce((a, b) => +a + +b.unit, 0)
-      return parseInt(parseFloat(sum) / parseFloat(this.grams_per_piece))
+      return parseInt(parseFloat(sum) / parseFloat(this.pastry.gpp))
     },
     totalCost ({ $store, $route }) {
       function getCost (p) {
@@ -164,8 +164,20 @@ export default {
         console.log(error)
       }
     },
-    total (val) {
-      this.grams_per_piece = parseFloat(val)
+    async total (val) {
+      const p = { ...this.pastry }
+      p.gpp = parseInt(val)
+      const data = await this.$axios
+        .$put(process.env.API_URL + 'pastry/', p)
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response)
+            // this.errors = [error.response.data.message]
+          } else {
+            console.log('Error', error.message)
+          }
+        })
+      await this.$store.commit('pastry/UpdatePastry', data)
     }
   }
 }
