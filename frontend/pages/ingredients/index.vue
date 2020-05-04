@@ -16,7 +16,7 @@
             type="number"
             v-model="ingredientCreate.price"
             min="1"
-            step="1" />
+            step="0.01" />
           <b-button
             class="mb-2 mr-sm-2 mb-sm-0"
             type="submit"
