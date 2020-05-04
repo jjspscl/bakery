@@ -68,7 +68,7 @@ class IngredientsView(viewsets.ViewSet):
         if len(r['name']) < 3:
           raise Exception('Name must have 3 or more characters')
 
-        p, created = Ingredient.objects.get_or_create(name=r['name'].title(), price=int(r['price']))
+        p, created = Ingredient.objects.get_or_create(name=r['name'].title(), price=float(r['price']))
         if created:
           serializer = IngredientSerializer(p)
           return Response(serializer.data)
