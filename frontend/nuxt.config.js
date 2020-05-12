@@ -2,8 +2,9 @@ const config = {
   test: process.env.NODE_ENV !== 'production'
 }
 
-export default {
+module.exports = {
   mode: 'spa',
+  dev: process.env.NODE_ENV === 'DEV',
   /*
   ** Headers of the page
   */
@@ -45,7 +46,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa', { icon: false },
     'bootstrap-vue/nuxt',
   ],
   /*
