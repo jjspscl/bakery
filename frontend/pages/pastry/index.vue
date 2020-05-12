@@ -29,12 +29,17 @@
     />
     <b-table
       :per-page="perPage"
-      :items="pastries"
+      :items="filtered"
       :current-page="currentPage"
       :fields="fields"
       striped
       hover
     >
+      <template slot="top-row" slot-scope="{ fields }">
+       <td v-for="field in fields" :key="field.key">
+         <input v-model="pfilter" v-if="field.key === 'name'" class="form-control" :placeholder="field.label">
+       </td>
+      </template>
       <template v-slot:cell(actions)="row">
         <nuxt-link :to="{ name: 'pastry-id', params: { id: row.item.id }}">
           <b-button
@@ -133,6 +138,14 @@ export default {
     }),
     rows () {
       return this.pastries.length
+    },
+    filtered () {
+      const f = this.pastries.filter((item) => {
+        console.log(this.pfilter, item.name)
+        return item.name.toLowerCase().includes(this.pfilter.toLowerCase())
+      })
+      console.log('FILTERED: ', f)
+      return f
     }
   },
   data () {
@@ -144,6 +157,7 @@ export default {
         { key: 'name', label: 'Pastry', sortable: true, class: 'text-center' },
         { key: 'actions', label: 'Actions' }
       ],
+      pfilter: '',
       infoModal: {
         id: 'info-modal',
         title: '',

@@ -36,12 +36,17 @@
     />
     <b-table
       :per-page="perPage"
-      :items="ingredients"
+      :items="filtered"
       :current-page="currentPage"
       :fields="fields"
       striped
       hover
     >
+      <template slot="top-row" slot-scope="{ fields }">
+        <td v-for="field in fields" :key="field.key">
+          <input v-model="ifilter" v-if="field.key === 'name'" class="form-control" :placeholder="field.label">
+        </td>
+      </template>
       <template v-slot:cell(name)="row">
         <b-form-input
           :id="`iname${row.item.id}`"
@@ -111,6 +116,12 @@ export default {
     }),
     rows () {
       return this.ingredients.length
+    },
+    filtered () {
+      const f = this.ingredients.filter((item) => {
+        return item.name.toLowerCase().includes(this.ifilter.toLowerCase())
+      })
+      return f
     }
   },
   data () {
@@ -123,6 +134,7 @@ export default {
         { key: 'price', label: 'Price', sortable: true, class: 'text-center' },
         { key: 'actions', label: 'Actions' }
       ],
+      ifilter: '',
       infoModal: {
         id: 'info-modal',
         title: '',
